@@ -73,16 +73,17 @@ const extractLinks = async (url) => {
     
     savedata(url,urllink,urllink2,urllink3,urllink4,wordcount);
 
-    recCheck(url);
+        //recursive call
+    //recCheck(url);
     
-   // console.log("URL with BASE URL");
-    //console.log(urllink);
-    //console.log("URL without BASE URL");
-    //console.log(urllink2);
-    //console.log("CSS URL");
-    //console.log(urllink3);
-    //console.log("javascript URL");
-    //console.log(urllink4);
+    console.log("URL with BASE URL");
+    console.log(urllink);
+    console.log("URL without BASE URL");
+    console.log(urllink2);
+    console.log("CSS URL");
+    console.log(urllink3);
+    console.log("javascript URL");
+    console.log(urllink4);
     //Store urllink, urllink2, urllink3, urllink4 in DB
    }
     
@@ -114,9 +115,17 @@ const savedata = async (url,urllink,urllink2,urllink3,urllink4,wordcount) => {
     }
     
 const recCheck = async (url) => {
-        const m = await model.findOne({url: url});
-        const nextUrl = m['urllink'][0];
-        if(nextUrl!=null)
-        console.log(nextUrl);
+        const m    = await model.findOne({url: url});
+        const vall =m['urllink']
+        if(vall != null){  
+        for (var i=0; i<vall.length;i++){
+            const nextUrl = vall[i];
+            if(nextUrl!=null && nextUrl!= url){
+            await extractLinks(line);
+        }    
+    }
+    }
+       
+        
 }
 
