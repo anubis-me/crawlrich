@@ -34,9 +34,9 @@ A few things to note in the project:
 ## Code Pics
 
 <p float="left">
-  <img style="margin: 10px;border-radius: 3px;" src="./data/1.png" width="60%"/>
-  <img style="margin: 10px;border-radius: 3px;" src="./data/2.png" width="60%"/>
-  <img style="margin: 10px;border-radius: 3px;" src="./data/3.png" width="60%"/>
+  <img style="margin: 10px;border-radius: 3px;" src="./data/1.png" width="60%" class="landscape"/>
+  <img style="margin: 10px;border-radius: 3px;" src="./data/2.png" width="60%" class="landscape"/>
+  <img style="margin: 10px;border-radius: 3px;" src="./data/3.png" width="60%" class="landscape"/>
 </p>
 
 ## Reference
