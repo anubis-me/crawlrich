@@ -19,7 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 mongoConnect((client) => {console.log("Connected")});
-
 //calling urls list
 const callinglinks =[];
 var        urllink =[];
@@ -34,7 +33,7 @@ const extractLinks = async (url) => {
     const html  = response.body;
 
     wordcount   = wordCountcheck(html);        
-    console.log("Word count"+url +" : "+wordcount);
+    console.log("Word count in  "+url +"  :->  "+wordcount);
     
     const $     = cheerio.load(html);  
 
@@ -85,7 +84,8 @@ const wordCountcheck = (html) =>{
     return wordCount;   
 }
 const checklink = (link) => {
- 
+
+const URL = "https://richpanel.com" 
  if(link != null){   
     if(link.includes(URL)){
         return 1;}
