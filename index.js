@@ -5,15 +5,12 @@ const got               = require('got');
 const cheerio           = require('cheerio');
 const createTextVersion = require("textversionjs");
 const fs                = require("fs"), readline = require('readline');
+const model             = require('./models/model')
 
 //Reading URLS line by line from TXT file
-var rd = readline.createInterface({
-    input: fs.createReadStream('urls.txt')
-});
+var rd = readline.createInterface({input: fs.createReadStream('urls.txt') });
 
-rd.on('line', function(line) {
-    extractLinks(line);
-});
+rd.on('line', function(line) { extractLinks(line);});
 
 //reading environment variables
 require("dotenv").config({path: `${__dirname}/.env`,});
@@ -27,10 +24,6 @@ app.use(cors());
 mongoConnect((client) => {console.log("Connected")});
 
 const callinglinks =[];
-var        urllink =[];
-var        urllink2=[];
-var        urllink3=[];
-var        urllink4=[];
 
 //async function to get word count and linked URLs
 const extractLinks = async (url) => {
@@ -47,18 +40,20 @@ const extractLinks = async (url) => {
     const linkObjects       = $('a');    
     const linkObjectsCSS    = $('link');
     const linkObjectsJS     = $('script');
-    
+    var        urllink =[];
+    var        urllink2=[];
+    var        urllink3=[];
+    var        urllink4=[];
+
     
     linkObjects.each( async (index, element) => { 
         const link = $(element).attr('href')
  
         //linked urls with same domain
-        if(checklink(link,url)==1)
-            { urllink.push(link);}
+        if(checklink(link,url)==1) { urllink.push(link);}
  
         //linked urls with same domain
-        else if(checklink(link,url)==2)
-            { urllink2.push(link);}
+        else if(checklink(link,url)==2) { urllink2.push(link);}
         });
 
     //linked URL CSS
@@ -71,21 +66,23 @@ const extractLinks = async (url) => {
     //Linked URL JavaScript
     linkObjectsJS.each( async (index, element) => { 
         const link4 = $(element).attr('src')
-        if (link4!=null){
-            urllink4.push(link4);
-        }
+        if (link4!=null){urllink4.push(link4); }
     });
 
     //Calling save function
+    
     savedata(url,urllink,urllink2,urllink3,urllink4,wordcount);
-    console.log("URL with BASE URL");
-    console.log(urllink);
-    console.log("URL without BASE URL");
-    console.log(urllink2);
-    console.log("CSS URL");
-    console.log(urllink3);
-    console.log("javascript URL");
-    console.log(urllink4);
+
+    recCheck(url);
+    
+   // console.log("URL with BASE URL");
+    //console.log(urllink);
+    //console.log("URL without BASE URL");
+    //console.log(urllink2);
+    //console.log("CSS URL");
+    //console.log(urllink3);
+    //console.log("javascript URL");
+    //console.log(urllink4);
     //Store urllink, urllink2, urllink3, urllink4 in DB
    }
     
@@ -103,26 +100,23 @@ const wordCountcheck = (html) =>{
 const checklink = (link,url) => {
 
  if(link != null){   
-    if(link.includes(url)){
-        return 1;}
-    else if(link.includes('https')||link.includes('http')){
-        return 2;
-    }
+    if(link.includes(url)) { return 1;}
+    else if(link.includes('https')||link.includes('http')){ return 2;}
     }
 }
 
 //to save data in Database
-const savedata = (url,urllink,urllink2,urllink3,urllink4,wordcount) => {
-    try{
-    var myobj ={"baseUrl": url,"baseSubUrl": urllink,"SubUrl":urllink2,"jsUrl":urllink3,"cssUrl":urllink4,"wordcount": wordcount};
-    var dbo = db.db("mydb");
-    dbo.collection("websites").insertOne(myobj, function(err, res) {
-    if (err) throw err;
-    console.log("1 document inserted");
-    db.close();
-});
-}
-catch (error) {console.log(error.response.body);}  
-}
+const savedata = async (url,urllink,urllink2,urllink3,urllink4,wordcount) => {
+        var myobj =new model({url,urllink,urllink2,urllink3,urllink4,wordcount});
+                    const post = await myobj.save();
+                    //console.log(post);
 
+    }
+    
+const recCheck = async (url) => {
+        const m = await model.findOne({url: url});
+        const nextUrl = m['urllink'][0];
+        if(nextUrl!=null)
+        console.log(nextUrl);
+}
 

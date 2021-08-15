@@ -17,6 +17,7 @@
     "got": "^11.8.2",
     "line-reader": "^0.4.0",
     "mongodb": "^4.1.0",
+    "mongoose": "^5.13.7",
     "puppeteer": "^10.2.0",
     "textversionjs": "^1.1.3"
   }
