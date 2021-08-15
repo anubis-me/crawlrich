@@ -1,0 +1,15 @@
+version: '2'
+services:
+  server:
+    build: .
+    env_file: .env
+   # restart: always    
+    ports:
+      - '8000:8000'
+    volumes: 
+      - ./server    
+    networks: 
+      - webappnetwork
+networks: 
+  webappnetwork: 
+    driver: bridge
