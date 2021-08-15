@@ -15,9 +15,6 @@
 <hr />
 Program for data scraping from web pages. This program will allow users to map hierarchy of a website, fetch basic information of each page and store it in db.
 
-<h1 align="center">
-  <img src="./data/1.png" width=500 alt="Spider">
-</h1>
 
 ## Key Features
 
@@ -37,9 +34,9 @@ A few things to note in the project:
 ## Code Pics
 
 <p float="left">
-  <img style="margin: 10px;border-radius: 3px;" src="./data/1.png" width="80%"/>
-  <img style="margin: 10px;border-radius: 3px;" src="./data/2.png" width="80%"/>
-  <img style="margin: 10px;border-radius: 3px;" src="./data/3.png" width="80%"/>
+  <img style="margin: 10px;border-radius: 3px;" src="./data/1.png" width="60%"/>
+  <img style="margin: 10px;border-radius: 3px;" src="./data/2.png" width="60%"/>
+  <img style="margin: 10px;border-radius: 3px;" src="./data/3.png" width="60%"/>
 </p>
 
 ## Reference
